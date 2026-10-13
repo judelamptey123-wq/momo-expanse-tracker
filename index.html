@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0f766e">
+  <title>MoMo Expense Tracker</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><div class="brand-icon">₵</div><div><h1>MoMo Expense Tracker</h1><p>Track your money. Understand your spending.</p></div></div>
+    <button id="exportBtn" class="btn btn-ghost">Export CSV</button>
+  </header>
+  <main class="container">
+    <section class="intro">
+      <div><span class="eyebrow">PERSONAL FINANCE</span><h2>Your money, made clearer.</h2><p>Record MTN MoMo, Vodafone Cash, bank, and cash transactions in one simple place.</p></div>
+      <div class="month-chip"><span>Current month</span><strong id="monthLabel">—</strong></div>
+    </section>
+    <section class="summary-grid" aria-label="Financial summary">
+      <article class="summary-card balance"><div class="card-label">Net cash flow <span>↗</span></div><strong id="netTotal">GH₵0.00</strong><small>Income minus expenses</small></article>
+      <article class="summary-card"><div class="card-label">Money in <span class="income-mark">＋</span></div><strong id="incomeTotal">GH₵0.00</strong><small id="incomeCount">0 income records</small></article>
+      <article class="summary-card"><div class="card-label">Money out <span class="expense-mark">－</span></div><strong id="expenseTotal">GH₵0.00</strong><small id="expenseCount">0 expense records</small></article>
+      <article class="summary-card"><div class="card-label">Transactions <span>▤</span></div><strong id="transactionCount">0</strong><small>Records this month</small></article>
+    </section>
+    <section class="content-grid">
+      <div class="panel form-panel">
+        <div class="panel-heading"><div><h3>Add a transaction</h3><p>Enter a payment, transfer, or income.</p></div><span class="plus-badge">＋</span></div>
+        <form id="transactionForm">
+          <div class="field-row">
+            <label>Type<select id="type" required><option value="expense">Expense</option><option value="income">Income</option></select></label>
+            <label>Amount (GH₵)<input id="amount" type="number" min="0.01" step="0.01" placeholder="0.00" required></label>
+          </div>
+          <label>Description<input id="description" maxlength="90" placeholder="e.g. Groceries, salary, transfer fee" required></label>
+          <div class="field-row">
+            <label>Category<select id="category" required><option>Food</option><option>Transport</option><option>Data & Airtime</option><option>Bills</option><option>Shopping</option><option>Health</option><option>Education</option><option>Family</option><option>Business</option><option>Salary</option><option>Sales</option><option>Transfer</option><option>Other</option></select></label>
+            <label>Payment method<select id="method"><option>MTN MoMo</option><option>Telecel Cash</option><option>AT Money</option><option>Bank</option><option>Cash</option><option>Other</option></select></label>
+          </div>
+          <label>Date<input id="date" type="date" required></label>
+          <button class="btn btn-primary full" type="submit">＋ Save transaction</button>
+          <p id="formMessage" class="form-message" role="status"></p>
+        </form>
+        <div class="privacy-note"><span>▣</span><p><strong>Your data stays on this device.</strong><br>Records are saved in this browser, not sent to a server.</p></div>
+      </div>
+      <div class="panel">
+        <div class="panel-heading"><div><h3>Spending breakdown</h3><p>Expenses by category this month.</p></div></div>
+        <div id="breakdown" class="breakdown"><div class="empty-state">Add expenses to see your spending breakdown.</div></div>
+        <div class="insight-box"><span class="insight-icon">✦</span><div><strong>Smart spending insight</strong><p id="insightText">Once you record transactions, your tracker will summarize patterns using built-in rules—no AI API required.</p></div></div>
+      </div>
+    </section>
+    <section class="panel transactions-panel">
+      <div class="panel-heading transactions-heading"><div><h3>Recent transactions</h3><p>Review, search, or remove your records.</p></div><span id="visibleCount" class="count-pill">0 records</span></div>
+      <div class="filters">
+        <label class="search-field"><span>⌕</span><input id="search" type="search" placeholder="Search description or category"></label>
+        <select id="filterType" aria-label="Filter by transaction type"><option value="all">All types</option><option value="income">Income only</option><option value="expense">Expenses only</option></select>
+        <select id="filterMonth" aria-label="Filter by month"><option value="all">All months</option></select>
+      </div>
+      <div class="table-wrap"><table><thead><tr><th>Transaction</th><th>Category / Method</th><th>Date</th><th class="right">Amount</th><th></th></tr></thead><tbody id="transactionRows"></tbody></table></div>
+      <div id="emptyTransactions" class="empty-state">No transactions yet. Add your first transaction above.</div>
+    </section>
+    <footer><span>MoMo Expense Tracker</span><span>Demo project · Built with HTML, CSS & JavaScript arrays</span></footer>
+  </main>
+  <dialog id="confirmDialog"><form method="dialog" class="dialog-content"><h3>Delete this transaction?</h3><p>This removes the record from this browser.</p><div class="dialog-actions"><button class="btn btn-ghost" value="cancel">Cancel</button><button id="confirmDelete" class="btn btn-danger" value="confirm">Delete</button></div></form></dialog>
+  <script src="app.js"></script>
+</body>
+</html>
